@@ -89,6 +89,32 @@ class BloxorzSuite extends FunSuite {
                      ).toStream
 	  }
 	}
+	
+	 trait SmallLevel extends SolutionChecker {
+        val level =
+            """oo---
+              |ooSoo
+              |oo-oo
+              |---oo""".stripMargin
+    }
+
+    test("from start small") {
+        new SmallLevel {
+            val initial: Stream[(Block, List[Move])] = Stream((startBlock, List()))
+            val explored: Set[Block] = Set(startBlock)
+            val observedResult = from(initial, explored).toList
+            val expectedResult: List[(Block, List[Move])] = List(
+                (Block(Pos(1, 2), Pos(1, 2)), List()),
+                (Block(Pos(1, 0), Pos(1, 1)), List(Left)),
+                (Block(Pos(1, 3), Pos(1, 4)), List(Right)),
+                (Block(Pos(0, 0), Pos(0, 1)), List(Up,Left)),
+                (Block(Pos(2, 0), Pos(2, 1)), List(Down,Left)),
+                (Block(Pos(2, 3), Pos(2, 4)), List(Down,Right)),
+                (Block(Pos(3, 3), Pos(3, 4)), List(Down,Down,Right))
+            )
+            assert(observedResult == expectedResult)
+        }
+    }
 
 
 	test("optimal solution for level 1") {
