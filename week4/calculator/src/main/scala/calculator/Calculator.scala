@@ -23,10 +23,10 @@ object Calculator {
         Double.NaN
       else
         eval(getReferenceExpr(name, references), references, referencedNames + name)
-    case Plus(a, b) => eval(a, references) + eval(b, references)
-    case Minus(a, b) => eval(a, references) - eval(b, references)
-    case Times(a, b) => eval(a, references) * eval(b, references)
-    case Divide(a, b) => eval(a, references) / eval(b, references)
+    case Plus(a, b) => eval(a, references, referencedNames) + eval(b, references, referencedNames)
+    case Minus(a, b) => eval(a, references, referencedNames) - eval(b, references, referencedNames)
+    case Times(a, b) => eval(a, references, referencedNames) * eval(b, references, referencedNames)
+    case Divide(a, b) => eval(a, references, referencedNames) / eval(b, references, referencedNames)
   }
   
   def eval(expr: Expr, references: Map[String, Signal[Expr]]): Double = {
